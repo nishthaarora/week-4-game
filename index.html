@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Assignment 4</title>
+
+  <!-- bootstrap stylesheet -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	
+  <!-- reset sheet -->
+  <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+	
+  <!-- internal stylesheet -->
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+</head>
+<body>
+
+
+<div class="container">
+
+<h1 class='heading'>Avengers!</h1>
+
+
+	<div class="row inactive">
+  <div class="col-xs-6 col-md-3 character first" value=120 data-player="1"> 
+    <a href="#" class="thumbnail"> Iron Man
+      <img src="assets/images/ironMan.jpg" alt="Obi-Wan Kenobi">
+      <h5 class="score">120</h5>
+    </a>
+  </div>
+
+  <div class="col-xs-6 col-md-3 character second" value=100 data-player="2">
+    <a href="#" class="thumbnail"> Captain America
+      <img class="second" src="assets/images/captain.jpg" alt="Luke Skywalker">
+      <h5 class="score">100</h5>
+    </a>
+  </div>
+
+
+  <div class="col-xs-6 col-md-3 character third" value=150 data-player="3">
+    <a href="#" class="thumbnail"> Thor
+      <img class="third" src="assets/images/thor.jpg" alt="Darth Sidious">
+      <h5 class="score">150</h5>
+    </a>
+  </div>
+  
+
+
+
+  <div class="col-xs-6 col-md-3 character fourth" value=180 data-player="4">
+    <a href="#" class="thumbnail"> Hulk
+      <img src="assets/images/hulk.png" alt="Darth Maul">
+      <h5 class="score">180</h5>
+    </a>
+  </div>
+
+</div>
+
+<div class="row">
+<h3 class="col-md-12 player">Your Character</h3>
+
+<!-- <div class="col-xs-6 col-md-3 character first" value=120 data-player="1"> 
+    <a href="#" class="thumbnail"> Iron Man
+      <img src="assets/images/ironMan.jpg" alt="Obi-Wan Kenobi">
+      <h5>120</h5>
+    </a>
+  </div>
+ -->
+
+
+
+</div>
+
+
+<div class="row">
+<h3 class="enemies">Enemies Available to Attack</h3>
+</div>
+
+
+<div class="row">
+<h3 class='fight'>Fight Section </h3>
+</div>
+
+<div class="row attackRow">
+<button class="attack">Attack</button>
+</div>
+
+<div class="row defender-row">
+<h3 class="defender">Defender</h3>
+</div>
+
+<p class='playerAttacks'></p>
+<p class='defenderAttacks'></p>
+<p class='lost won blink'></p>
+
+
+<div class="row restartRow">
+<button id="button" class="btn btn-default clear" value='Refresh Page restart' onClick="window.location.reload()"><p>Restart</p></button>
+</div>
+
+
+</div>
+
+
+
+<!-- Jquery -->
+<script   src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
+
+<!-- javascript -->
+<script src="assets/javascript/game2.js" type="text/javascript"></script>
+
+</body>
+</html>
