@@ -1,6 +1,4 @@
-
 $(document).ready(function() {
-
 
     // variables
 
@@ -8,27 +6,22 @@ $(document).ready(function() {
     var yourEnemies = false;
     var yourDefender = false;
     var playersArray = [];
-    // var audio = new Audio('https://p.scdn.co/mp3-preview/ed5a443bc86176135ebca8a114f66f4d814d4c90');
+    var enemyDefeatedCount = 0;
 
-    // setTimeout(fiveSeconds, 5000);
-    // function fiveSeconds(){
-    //     // alert('game is about to begain')
-    // }
-    // audio.play();
 
     // creating objects and assigning them to an array 
 
     var firstPlayer = {
-        name:['Iron Man'],
+        name: 'Jon Snow',
         healthPoints: 120,
         attackPower: 8,
-        counterAttackPower: 10,
+        counterAttackPower: 8,
         numberOfAttacks: 1
 
     }
 
     var secondPlayer = {
-        name: ['Captain America'],
+        name: 'Cersei Lannister',
         healthPoints: 100,
         attackPower: 5,
         counterAttackPower: 5,
@@ -36,18 +29,18 @@ $(document).ready(function() {
     }
 
     var thirdPlayer = {
-        name: ['Thor'],
+        name: 'Daenerys Targaryen',
         healthPoints: 150,
         attackPower: 15,
-        counterAttackPower: 10,
+        counterAttackPower: 20,
         numberOfAttacks: 1
     }
 
     var fourthPlayer = {
-        name: ['Hulk'],
+        name: 'Ramsay Bolton',
         healthPoints: 180,
         attackPower: 25,
-        counterAttackPower: 25,
+        counterAttackPower: 18,
         numberOfAttacks: 1
     }
 
@@ -55,62 +48,83 @@ $(document).ready(function() {
     playersArray.push(secondPlayer);
     playersArray.push(thirdPlayer);
     playersArray.push(fourthPlayer);
-    // console.log(playersArray);
+
 
 
     // reset function
 
     function startGame() {
-        var yourCharacter = false;
-        var yourEnemies = false;
-        var yourDefender = false;
-        // firstPlayer.healthpoints=120;
-        // secondPlayer.healthpoints=100;
-        // thirdPlayer.healthpoints=150;
-        // fourthPlayer.healthpoints=180;
+        yourCharacter = false;
+        yourEnemies = false;
+        yourDefender = false;
+
     };
 
 
 
 
+    // function to play an audio
+
+    var audio = new Audio('assets/images/themeSong.mp3');
+
+    audio.play();
+
+    $('body').prepend('<button class="start">START</button>');
+
+
+    function clickToStart() {
+        var name = prompt('Please Enter Your Name');
+        var nameSlice = name.substring(0, 1).toUpperCase() + name.substring(1);
+        var age = prompt('Please Enter Your Age');
+            if(age<18){
+            $('body').prepend('<div class="name">You Have To Be Above 18 To Play This Game</div>')
+        } else {
+            $('.name').remove()
+        $('.heading').html('Welcome ' + nameSlice);
+        $(this).remove();  
+    $('.container').removeClass('hidden');
+
+        }
+    };
+
+
+    function oneMinute() {
+        audio.pause();
+    };
+
+    setTimeout(oneMinute, 60000);
 
 
     // appending players as your character, enemies and defendent
 
-
-
     function selectOpponents() {
 
+        $('.notice').remove();
 
         if (yourCharacter === false) {
             yourCharacter = $(this);
             $('.player').after(yourCharacter);
-            // console.log(yourCharacter);
             yourCharacter = playersArray[$(this).data('player') - 1];
-            yourCharacter.element= $(this);
-            console.log(yourCharacter);
+            yourCharacter.element = $(this);
             $(this).addClass('selectedOpponent');
-
+            console.log('x: ' + yourCharacter);
 
             if (yourCharacter) {
                 $('.enemies').after($('.inactive .character'));
                 $(this).addClass('selectedEnemies')
-                }
-            
+            }
 
-        } else if(yourDefender === false) {
+        } else if (yourDefender === false) {
 
             yourDefender = $(this);
             $('.defender').after(yourDefender);
             yourDefender = playersArray[$(this).data('player') - 1];
-            yourDefender.element= $(this);
+            yourDefender.element = $(this);
+            $(this).addClass('selectedDefender')
+            $('.lost').html('');
 
-            // $(this).addClass('selectedDefender')
-            // console.log(yourDefender);
-        } 
-
+        }
     };
-
 
 
     // function for the fight between two players
@@ -118,82 +132,58 @@ $(document).ready(function() {
     function fight(x, y) {
 
         // if enemy not selected send an alert
-        if (y === false) {
+
+        if (yourDefender === false) {
             alert("Players not selected");
 
             return;
         }
 
- 		
-        x.healthPoints -= y.counterAttackPower; //decreasing players healthPoints with defenders counter attack
-        x.element.find('.score').html(x.healthPoints); //assigned property to defender and player and class to 
-        //healthpoints in html so that the class can be picked and reduced. 
+        // logic for healthpoint deduction
 
-
-        // to increment the attach of the player by its multiple.
-        // assigned a property to all the players i.e numberOfAttacks and incresing it everytime
         var attacksIncrement = yourCharacter.numberOfAttacks++;
-        var attackPowerIncrement = attacksIncrement*x.attackPower
-        // console.log(attacksIncrement);
+        console.log(attacksIncrement);
+        var attackPowerIncrement = attacksIncrement * x.attackPower
+        console.log(attackPowerIncrement);
         y.healthPoints -= attackPowerIncrement;
-        // console.log(y.healthPoints);
-
+        console.log(y.healthPoints);
         y.element.find('.score').html(y.healthPoints);
 
 
-        if (x.healthPoints <= 0) {
-            console.log(x.healthPoints);
-            // alert('you lost the game, please click on restart');
-            startGame();
-            return;
-        } 
-
-        else if (y.healthPoints <= 0) {
-            $('.won').html('<h1 class ="winningText">' + 'you won, please select next opponent' + '</h1>')
+        if (y.healthPoints <= 0) {
             y.element.remove();
-                // startGame();
-            $('.attack').remove();
-            $('.clear').remove();
-              selectOpponents(this);
+            yourDefender = false;
+            $('.lost').html(y.name + ' is defeated');
+            enemyDefeatedCount++;
 
+            if (enemyDefeatedCount === 3) {
+                $('.won').html('<h1 class ="winningText">' + 'You Won' + '</h1>')
+            }
+
+        } else {
+            x.healthPoints -= y.counterAttackPower;
+            x.element.find('.score').html(x.healthPoints);
         }
 
-$('.playerAttacks').html('You Attacked ' + x.name + ' for ' + attackPowerIncrement);
- $('.defenderAttacks').html(y.name + ' attacked you for ' + y.counterAttackPower);
+        if (x.healthPoints <= 0) {
+            x.element.remove();
+            $('.attack').remove();
 
-        // console.log('player x: ' + x.healthPoints);
+            startGame();
+            return;
+        }
 
-        //  console.log('player y: ' + y.healthPoints);      
+        $('.playerAttacks').html('You Attacked ' + y.name + ' for ' + attackPowerIncrement);
+        $('.defenderAttacks').html(y.name + ' attacked you for ' + y.counterAttackPower);
 
     };
 
-
-
-
-// function gameStatus{
-    
-//    if opponent lost then remove this opponend and select other
-//     opponent won then restart this game
-//     //opponent lost and player won
-//     if(y.healthpoints < 0 ){
-//         selectOpponents(yourDefender);
-
-//     } 
-
-
-// }
-
-
-
-
-
-
-    // calling the functions 
+    // changing function names
 
     $('.character').on('click', selectOpponents);
     $('.attack').on('click', function() {
         fight(yourCharacter, yourDefender);
     });
-
+    $('.start').on('click', clickToStart);
 
 });

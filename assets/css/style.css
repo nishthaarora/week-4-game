@@ -1,21 +1,62 @@
+
+.hidden{
+	display: none;
+}
+
+.start{
+
+	position: absolute;
+    left: 35%;
+    top: 20%;
+    width: 200px;
+    padding: 30px;
+    background-color:#CDDC39;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 20px;
+    /*color:black;*/
+}
+
 body{
 
-	background-image: url("../images/background.jpg");
+	background-image: url("../images/background.jpeg");
 	background-size: cover;
+	padding:20px;
+	font-family: arial;
+	/*font-size: 10px;*/
 
 }
 
 .heading, .player, .enemies, .fight, .defender{
 
 	color:white;
-	font-size: 20px;
+	font-size: 15px;
 	padding-left: 15px;
 }
 
-img.third{
-
-	height: 143px;
+.notice{
+	color:#CDDC39;
+	margin-top: 5px;
 }
+
+ .rules{
+ 	
+    position: fixed;
+    right: 20px;
+    
+    top:300px;
+    border: 5px solid #CDDC39;
+    color:#ffffff;
+    padding:15px;
+ 	overflow: auto;
+ 	
+ }
+
+ ul.rules {
+    /*margin-top: 105px;*/
+    /*bottom: 0;*/
+}
+
 
 .attack{
 	background: #CDDC39;
@@ -25,6 +66,9 @@ img.third{
 }
 .heading{
 	font-size: 25px;
+	width:60%;
+	display:inline;
+	
 }
 
 .clear{
@@ -54,10 +98,49 @@ background: #e85d5d;
 .thumbnail{
 	color:black;
 }
+
+
+
+.row.inactive{
+	margin:0;
+	/*display: inline;*/
+}
 .lost, .playerAttacks, .defenderAttacks{
 	color:white;
 }
+.tag{
+	
+    width: 165px;
+    position:absolute;
+    top: 0;
+    right: 0;
+    /*color:inherit;*/
+}
+.name{
+	color:white;
+	font-weight: bold;
+	color:#CDDC39;
+	font-size:20px;
+}
 
 
+#snowflakeContainer {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+.snowflake {
+    padding-left: 15px;
+    font-family: Cambria, Georgia, serif;
+    font-size: 14px;
+    line-height: 24px;
+    position: fixed;
+    color: #FFFFFF;
+    user-select: none;
+    z-index: 1000;
+}
+.snowflake:hover {
+    cursor: default;
+}
 
 
