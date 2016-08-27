@@ -40,7 +40,7 @@ $(document).ready(function() {
         name: 'Ramsay Bolton',
         healthPoints: 180,
         attackPower: 25,
-        counterAttackPower: 18,
+        counterAttackPower: 25,
         numberOfAttacks: 1
     }
 
@@ -58,9 +58,8 @@ $(document).ready(function() {
         yourEnemies = false;
         yourDefender = false;
 
+
     };
-
-
 
 
     // function to play an audio
@@ -73,18 +72,8 @@ $(document).ready(function() {
 
 
     function clickToStart() {
-        var name = prompt('Please Enter Your Name');
-        var nameSlice = name.substring(0, 1).toUpperCase() + name.substring(1);
-        var age = prompt('Please Enter Your Age');
-            if(age<18){
-            $('body').prepend('<div class="name">You Have To Be Above 18 To Play This Game</div>')
-        } else {
-            $('.name').remove()
-        $('.heading').html('Welcome ' + nameSlice);
-        $(this).remove();  
+        $(this).hide();  
     $('.container').removeClass('hidden');
-
-        }
     };
 
 
@@ -151,14 +140,17 @@ $(document).ready(function() {
 
 
         if (y.healthPoints <= 0) {
-            y.element.remove();
+            y.element.hide();
             yourDefender = false;
             $('.lost').html(y.name + ' is defeated');
             enemyDefeatedCount++;
 
+
             if (enemyDefeatedCount === 3) {
                 $('.won').html('<h1 class ="winningText">' + 'You Won' + '</h1>')
             }
+
+
 
         } else {
             x.healthPoints -= y.counterAttackPower;
@@ -166,11 +158,12 @@ $(document).ready(function() {
         }
 
         if (x.healthPoints <= 0) {
-            x.element.remove();
-            $('.attack').remove();
+            x.element.hide();
+            $('.attack').hide();
 
             startGame();
             return;
+
         }
 
         $('.playerAttacks').html('You Attacked ' + y.name + ' for ' + attackPowerIncrement);
