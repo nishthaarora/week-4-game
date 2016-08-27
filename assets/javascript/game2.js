@@ -1,7 +1,6 @@
 $(document).ready(function() {
-
+    
     // variables
-
     var yourCharacter = false;
     var yourEnemies = false;
     var yourDefender = false;
@@ -57,8 +56,6 @@ $(document).ready(function() {
         yourCharacter = false;
         yourEnemies = false;
         yourDefender = false;
-
-
     };
 
 
@@ -70,46 +67,39 @@ $(document).ready(function() {
 
     $('body').prepend('<button class="start">START</button>');
 
+    // pause music after 1 minute
+    setTimeout(audio.pause, 60000);
 
+    // function to start game
     function clickToStart() {
-        $(this).hide();  
-    $('.container').removeClass('hidden');
+        $(this).hide();
+        $('.container').removeClass('hidden');
     };
-
-
-    function oneMinute() {
-        audio.pause();
-    };
-
-    setTimeout(oneMinute, 60000);
 
 
     // appending players as your character, enemies and defendent
-
     function selectOpponents() {
 
+        var $this = $(this);
         $('.notice').remove();
 
         if (yourCharacter === false) {
-            yourCharacter = $(this);
-            $('.player').after(yourCharacter);
-            yourCharacter = playersArray[$(this).data('player') - 1];
-            yourCharacter.element = $(this);
-            $(this).addClass('selectedOpponent');
-            console.log('x: ' + yourCharacter);
+            
+            $('.player').after($this);
+            yourCharacter = playersArray[$this.data('player') - 1];
+            yourCharacter.element = $this;
+            $this.addClass('selectedOpponent');
 
             if (yourCharacter) {
                 $('.enemies').after($('.inactive .character'));
-                $(this).addClass('selectedEnemies')
+                $this.addClass('selectedEnemies')
             }
 
         } else if (yourDefender === false) {
-
-            yourDefender = $(this);
-            $('.defender').after(yourDefender);
-            yourDefender = playersArray[$(this).data('player') - 1];
-            yourDefender.element = $(this);
-            $(this).addClass('selectedDefender')
+            $('.defender').after($this);
+            yourDefender = playersArray[$this.data('player') - 1];
+            yourDefender.element = $this;
+            $this.addClass('selectedDefender')
             $('.lost').html('');
 
         }
@@ -124,18 +114,14 @@ $(document).ready(function() {
 
         if (yourDefender === false) {
             alert("Players not selected");
-
             return;
         }
 
         // logic for healthpoint deduction
 
         var attacksIncrement = yourCharacter.numberOfAttacks++;
-        console.log(attacksIncrement);
         var attackPowerIncrement = attacksIncrement * x.attackPower
-        console.log(attackPowerIncrement);
         y.healthPoints -= attackPowerIncrement;
-        console.log(y.healthPoints);
         y.element.find('.score').html(y.healthPoints);
 
 
@@ -145,12 +131,10 @@ $(document).ready(function() {
             $('.lost').html(y.name + ' is defeated');
             enemyDefeatedCount++;
 
-
+            // check if all enemies are defeated
             if (enemyDefeatedCount === 3) {
                 $('.won').html('<h1 class ="winningText">' + 'You Won' + '</h1>')
             }
-
-
 
         } else {
             x.healthPoints -= y.counterAttackPower;
@@ -163,12 +147,10 @@ $(document).ready(function() {
 
             startGame();
             return;
-
         }
 
         $('.playerAttacks').html('You Attacked ' + y.name + ' for ' + attackPowerIncrement);
         $('.defenderAttacks').html(y.name + ' attacked you for ' + y.counterAttackPower);
-
     };
 
     // changing function names
@@ -177,6 +159,6 @@ $(document).ready(function() {
     $('.attack').on('click', function() {
         fight(yourCharacter, yourDefender);
     });
-    $('.start').on('click', clickToStart);
 
+    $('.start').on('click', clickToStart);
 });
