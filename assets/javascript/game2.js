@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    
+
     // variables
     var yourCharacter = false;
     var yourEnemies = false;
@@ -78,9 +78,14 @@ $(document).ready(function() {
 
 
     // appending players as your character, enemies and defendent
-    function selectOpponents() {
-
+    function selectOpponents(event) {
+        event.preventDefault();
         var $this = $(this);
+        if($this.hasClass('selected')) {
+            return;
+        } else {
+            $this.addClass('selected');
+        }
         $('.notice').remove();
 
         if (yourCharacter === false) {
@@ -89,10 +94,10 @@ $(document).ready(function() {
             yourCharacter = playersArray[$this.data('player') - 1];
             yourCharacter.element = $this;
             $this.addClass('selectedOpponent');
+            $this.removeClass('')
 
             if (yourCharacter) {
                 $('.enemies').after($('.inactive .character'));
-                $this.addClass('selectedEnemies')
             }
 
         } else if (yourDefender === false) {
@@ -101,7 +106,6 @@ $(document).ready(function() {
             yourDefender.element = $this;
             $this.addClass('selectedDefender')
             $('.lost').html('');
-
         }
     };
 
@@ -144,8 +148,7 @@ $(document).ready(function() {
         if (x.healthPoints <= 0) {
             x.element.hide();
             $('.attack').hide();
-
-            startGame();
+            alert('You Lost, please refresh')
             return;
         }
 
